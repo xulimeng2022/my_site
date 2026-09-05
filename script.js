@@ -141,6 +141,47 @@
     });
   }
 
+  /* ================= 联系方式点击复制（QQ / 微信） ================= */
+  var copyLinks = Array.prototype.slice.call(document.querySelectorAll('a.contact-link[data-copy]'));
+
+  copyLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var text = link.getAttribute('data-copy');
+      var hint = link.querySelector('.copy-hint');
+
+      function showDone() {
+        link.classList.add('copied');
+        if (hint) hint.textContent = '✓ 已复制';
+        setTimeout(function () {
+          link.classList.remove('copied');
+          if (hint) hint.textContent = '复制';
+        }, 1600);
+      }
+
+      /* 兜底方案：兼容 http/file 等不支持 Clipboard API 的环境 */
+      function fallbackCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '0';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+        document.body.removeChild(ta);
+        if (ok) showDone();
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showDone).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+    });
+  });
   /* ================= 初始化 ================= */
   updateNav();
   refresh();

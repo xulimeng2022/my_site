@@ -828,3 +828,33 @@ body { -webkit-font-smoothing: antialiased; }
   .interest-name { font-size: 17px; }
   .hobby-badge { font-size: 11px; padding: 2px 8px; }
 }
+/* ==========================================================================
+   联系区：社交 / 邮箱分组 + 点击复制
+   ========================================================================== */
+
+.contact-group { margin-bottom: 46px; }
+.contact-group:last-child { margin-bottom: 0; }
+.contact-group .sub-head { margin: 0 0 4px; }
+
+/* 复制行：QQ / 微信 */
+a.contact-link[data-copy] { cursor: copy; }
+.copy-hint {
+  font-size: 11px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  border: 1px solid rgba(166, 25, 46, 0.4);
+  border-radius: 999px;
+  padding: 5px 11px;
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.contact-link:hover .copy-hint {
+  background: var(--red);
+  color: #fff;
+}
+.contact-link.copied .copy-hint {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: #fff;
+}
