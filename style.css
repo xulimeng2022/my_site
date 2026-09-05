@@ -636,3 +636,195 @@ body { -webkit-font-smoothing: antialiased; }
   word-break: break-word;
   min-width: 0;
 }
+/* ==========================================================================
+   特长与兴趣（04 区块重构：核心特长 + 课余兴趣）
+   ========================================================================== */
+
+/* ---------- 子标题（CORE STRENGTHS / EXTRA） ---------- */
+.sub-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 10px 0 26px;
+}
+.sub-head .rule { flex: 1; }
+
+/* ---------- 关于区正文里的 em 强调 ---------- */
+.about-copy em {
+  font-style: normal;
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ---------- 核心特长网格 ---------- */
+.strengths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 84px;
+}
+.strength-card {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.35);
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.strength-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(25, 25, 25, 0.08);
+}
+
+/* AI 卡：红色主题重点突出 */
+.strength-featured {
+  border-color: var(--red);
+  background: linear-gradient(135deg, #b01e33 0%, #7d1222 100%);
+  color: #fff;
+  box-shadow: 0 14px 40px rgba(166, 25, 46, 0.22);
+}
+.strength-featured .strength-desc { color: rgba(255, 255, 255, 0.88); }
+.strength-featured .lvl-label,
+.strength-featured .lvl-pct { color: rgba(255, 255, 255, 0.78); }
+
+.strength-top { display: flex; align-items: flex-start; gap: 16px; }
+.strength-emoji { font-size: 34px; line-height: 1; flex: none; }
+.strength-info { flex: 1; min-width: 0; }
+.strength-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+.strength-desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.8;
+  margin-top: 8px;
+}
+
+/* 等级徽章 */
+.lvl-badge {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  padding: 4px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.lvl-expert { background: var(--red); color: #fff; }
+.strength-featured .lvl-expert { background: #fff; color: var(--red); }
+.lvl-high { border: 1px solid var(--red); color: var(--red); }
+.strength-featured .lvl-high { border-color: rgba(255, 255, 255, 0.85); color: #fff; }
+
+/* 等级条 */
+.lvl-row { display: flex; align-items: center; gap: 14px; }
+.lvl-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.lvl-dots { display: flex; gap: 6px; flex: 1; }
+.lvl-dots i {
+  width: 100%;
+  height: 6px;
+  background: var(--red);
+  border-radius: 999px;
+}
+.lvl-dots i.off { background: var(--line); }
+.strength-featured .lvl-dots i { background: rgba(255, 255, 255, 0.85); }
+.strength-featured .lvl-dots i.off { background: rgba(255, 255, 255, 0.28); }
+.lvl-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* ---------- 课余兴趣网格 ---------- */
+.interests {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.interest-card {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.35);
+  padding: 28px 18px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.interest-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(25, 25, 25, 0.07);
+}
+.interest-emoji { font-size: 42px; line-height: 1; }
+.interest-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* 「菜又爱玩」小徽章 */
+.hobby-badge {
+  font-size: 12px;
+  color: var(--red);
+  background: rgba(166, 25, 46, 0.08);
+  border: 1px solid rgba(166, 25, 46, 0.35);
+  padding: 2px 11px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+/* 中国象棋：段位感突出 */
+.chess-card {
+  border: 1.5px solid var(--red);
+  position: relative;
+  background: rgba(166, 25, 46, 0.04);
+}
+.chess-card::before {
+  content: "";
+  position: absolute;
+  left: -1px; top: -1px;
+  width: 3px; height: 42px;
+  background: var(--red);
+}
+.chess-card .interest-emoji { color: var(--red); font-size: 46px; font-weight: 700; }
+.chess-level {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+  border-bottom: 1px dashed rgba(166, 25, 46, 0.4);
+  padding-bottom: 2px;
+  letter-spacing: 0.08em;
+}
+.chess-rank {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+/* ---------- 响应式：特长与兴趣 ---------- */
+@media (max-width: 900px) {
+  .strengths { grid-template-columns: 1fr; margin-bottom: 68px; }
+}
+@media (max-width: 560px) {
+  .strengths { gap: 18px; }
+  .strength-card { padding: 22px 20px; }
+  .strength-emoji { font-size: 28px; }
+  .interests { gap: 14px; }
+  .interest-card { padding: 20px 8px 18px; }
+  .interest-emoji { font-size: 34px; }
+  .interest-name { font-size: 17px; }
+  .hobby-badge { font-size: 11px; padding: 2px 8px; }
+}
