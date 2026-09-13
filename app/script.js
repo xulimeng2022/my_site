@@ -87,19 +87,37 @@
     }
     return copied;
   }
-  copyButton.addEventListener('click', async () => {
-    const url = document.querySelector('.support-url').href;
-    let copied = false;
-    copyButton.disabled = true;
+  async function copyText(text) {
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(url);
-        copied = true;
+        await navigator.clipboard.writeText(text);
+        return true;
       }
-    } catch (_) { /* Try the local-file compatible path below. */ }
-    if (!copied) copied = copyFallback(url);
-    copyButton.disabled = false;
-    copyButton.focus({ preventScroll: true });
-    notify(copied ? '爱发电链接已复制' : '暂时无法自动复制，请长按或右键上方链接复制');
+    } catch (_) { /* 继续尝试兼容本地文件的复制方式。 */ }
+    return copyFallback(text);
+  }
+
+  async function handleCopy(button, text, successMessage, failureMessage) {
+    button.disabled = true;
+    const copied = await copyText(text);
+    button.disabled = false;
+    button.focus({ preventScroll: true });
+    notify(copied ? successMessage : failureMessage);
+  }
+
+  copyButton.addEventListener('click', () => handleCopy(
+    copyButton,
+    document.querySelector('.support-url').href,
+    '爱发电链接已复制',
+    '暂时无法自动复制，请长按或右键上方链接复制'
+  ));
+
+  document.querySelectorAll('[data-copy-text]').forEach(button => {
+    button.addEventListener('click', () => handleCopy(
+      button,
+      button.dataset.copyText,
+      '百度网盘提取码已复制',
+      '暂时无法自动复制，请手动选择提取码'
+    ));
   });
 })();

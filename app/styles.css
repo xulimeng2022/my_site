@@ -387,3 +387,21 @@ h2 { display: flex; align-items: center; gap: 10px; font-size: 1.4375rem; font-w
   .panel, .feature-card { break-inside: avoid; background: white; box-shadow: none; border-color: #ddd; }
   .has-js .feature-grid .extra-feature { display: flex; }
 }
+/* 国内友好下载 */
+.domestic-download-panel { padding: 17px 23px 15px; }
+.domestic-download-panel .section-heading { margin-bottom: 8px; }
+.domestic-download-panel h2 { font-size: 1.35rem; gap: 8px; flex-wrap: wrap; }
+.domestic-download-panel h2 .icon { width: 23px; height: 23px; color: #61a1ea; }
+.download-intro { color: var(--muted); font-size: .9375rem; }
+.domestic-download-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.domestic-download-card { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 14px 15px; border: 1px solid var(--card-border); border-radius: 16px; background: var(--card); }
+.domestic-download-card h3 { margin: 0 0 4px; font-size: 1rem; }
+.domestic-download-card p { color: var(--muted); font-size: .875rem; line-height: 1.5; }
+.domestic-download-button { width: 100%; min-height: 48px; margin-top: auto; justify-content: center; }
+.download-code-row { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 4px 6px 4px 11px; border: 1px solid var(--soft-border); border-radius: 12px; background: var(--soft-button); }
+.download-code-label { flex: 0 0 auto; color: var(--muted); font-size: .8125rem; }
+.download-code { color: var(--text); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .9375rem; font-weight: 700; letter-spacing: .08em; user-select: all; }
+.code-copy-button { width: 40px; height: 40px; margin-left: auto; color: var(--blue); }
+.download-disclosure { margin-top: 10px; color: var(--subtle); font-size: .75rem; }
+@media (max-width: 900px) { .domestic-download-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .domestic-download-panel { padding: 15px; } .domestic-download-card { padding: 13px; } }
