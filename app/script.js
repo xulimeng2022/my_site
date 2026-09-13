@@ -9,6 +9,12 @@
   const navigation = document.getElementById('navigation');
   const featureButton = document.querySelector('.features-toggle');
   const featureGrid = document.getElementById('feature-grid');
+  const downloadModal = document.getElementById('download-modal');
+  const downloadDialog = downloadModal ? downloadModal.querySelector('.download-dialog') : null;
+  const downloadOpeners = document.querySelectorAll('[data-open-download]');
+  const downloadClosers = downloadModal ? downloadModal.querySelectorAll('[data-close-download]') : [];
+  let downloadDialogTrigger = null;
+  let downloadDialogTimer;
   const copyButton = document.querySelector('.copy-button');
   const toast = document.getElementById('toast');
   let toastTimer;
@@ -36,11 +42,57 @@
     navigation.classList.toggle('is-open', open);
     if (returnFocus) menuButton.focus();
   }
+  function setDownloadTriggerExpanded(expanded) {
+    downloadOpeners.forEach(button => button.setAttribute('aria-expanded', String(expanded)));
+  }
+
+  function openDownloadDialog(trigger) {
+    if (!downloadModal || !downloadDialog) return;
+    window.clearTimeout(downloadDialogTimer);
+    downloadDialogTrigger = trigger;
+    setMenu(false);
+    downloadModal.hidden = false;
+    window.requestAnimationFrame(() => downloadModal.classList.add('is-open'));
+    document.body.classList.add('has-download-open');
+    setDownloadTriggerExpanded(true);
+    downloadDialog.focus({ preventScroll: true });
+  }
+
+  function closeDownloadDialog() {
+    if (!downloadModal || downloadModal.hidden) return;
+    downloadModal.classList.remove('is-open');
+    document.body.classList.remove('has-download-open');
+    setDownloadTriggerExpanded(false);
+    window.clearTimeout(downloadDialogTimer);
+    downloadDialogTimer = window.setTimeout(() => {
+      downloadModal.hidden = true;
+      if (downloadDialogTrigger) downloadDialogTrigger.focus({ preventScroll: true });
+      downloadDialogTrigger = null;
+    }, 180);
+  }
   menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
   navigation.addEventListener('click', event => {
-    if (event.target.closest('a')) setMenu(false);
+    if (event.target.closest('a, button[data-open-download]')) setMenu(false);
   });
   document.addEventListener('keydown', event => {
+    if (downloadModal && !downloadModal.hidden && event.key === 'Escape') {
+      event.preventDefault();
+      closeDownloadDialog();
+      return;
+    }
+    if (downloadModal && !downloadModal.hidden && event.key === 'Tab') {
+      const focusable = Array.from(downloadDialog.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter(item => item.getClientRects().length > 0);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
     if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') setMenu(false, true);
   });
   document.addEventListener('click', event => {
@@ -87,6 +139,8 @@
     }
     return copied;
   }
+  downloadOpeners.forEach(button => button.addEventListener('click', () => openDownloadDialog(button)));
+  downloadClosers.forEach(button => button.addEventListener('click', closeDownloadDialog));
   async function copyText(text) {
     try {
       if (navigator.clipboard && window.isSecureContext) {
