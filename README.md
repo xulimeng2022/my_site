@@ -2,7 +2,7 @@
 
 Personal portfolio and project website of 徐力萌, an undergraduate student at Hunan University.
 
-🌐 Live site: [https://xulimeng2026.netlify.app](https://xulimeng2026.netlify.app)
+🌐 Live site: [https://xulimeng2022.github.io](https://xulimeng2022.github.io)
 
 ## Contents
 
@@ -16,7 +16,7 @@ Personal portfolio and project website of 徐力萌, an undergraduate student at
 - HTML
 - CSS
 - JavaScript
-- Netlify
+- GitHub Pages
 
 ## Project Structure
 
